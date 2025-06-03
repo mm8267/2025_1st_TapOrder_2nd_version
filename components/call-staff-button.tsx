@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+<<<<<<< HEAD
 import { Bell, Check, Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
@@ -18,6 +19,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+=======
+import { Bell, Check, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { toast } from "@/components/ui/use-toast"
+import { cn } from "@/lib/utils"
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
 
 interface CallStaffButtonProps {
   className?: string
@@ -25,6 +32,7 @@ interface CallStaffButtonProps {
 }
 
 export function CallStaffButton({ className, fixed = true }: CallStaffButtonProps) {
+<<<<<<< HEAD
   const [status, setStatus] = useState<"idle" | "calling" | "called" | "error">("idle")
   const [cooldown, setCooldown] = useState(0)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -32,6 +40,10 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
   const [message, setMessage] = useState("")
   const [reason, setReason] = useState("help")
   const [customerName, setCustomerName] = useState("")
+=======
+  const [status, setStatus] = useState<"idle" | "calling" | "called">("idle")
+  const [cooldown, setCooldown] = useState(0)
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
 
   // 쿨다운 타이머
   useEffect(() => {
@@ -50,6 +62,7 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
     return () => clearInterval(timer)
   }, [cooldown])
 
+<<<<<<< HEAD
   // 테이블 ID 자동 생성 (실제로는 QR 코드나 다른 방법으로 설정할 수 있음)
   useEffect(() => {
     // 랜덤 테이블 번호 생성 (1~20)
@@ -60,10 +73,15 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
   const handleCallStaff = async () => {
     if (status !== "idle") return
     setIsDialogOpen(false)
+=======
+  const handleCallStaff = () => {
+    if (status !== "idle") return
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
 
     // 호출 상태로 변경
     setStatus("calling")
 
+<<<<<<< HEAD
     // 호출 사유에 따른 메시지 설정
     let finalMessage = message
     if (!finalMessage.trim()) {
@@ -144,6 +162,26 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
   const handleQuickCall = () => {
     if (status !== "idle") return
     handleCallStaff()
+=======
+    // 서버에 직원 호출 요청을 보내는 API 호출 (실제로는 서버와 통신)
+    // 여기서는 시뮬레이션만 구현
+    setTimeout(() => {
+      setStatus("called")
+      setCooldown(60) // 60초 쿨다운
+
+      // 토스트 메시지로 알림
+      toast({
+        title: "직원 호출 완료",
+        description: "곧 직원이 도착할 예정입니다.",
+        duration: 3000,
+      })
+
+      // 진동 효과 (지원하는 기기에서만)
+      if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100])
+      }
+    }, 1500)
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
   }
 
   // 버튼 텍스트 및 아이콘 결정
@@ -163,6 +201,7 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
             {cooldown > 0 ? `${cooldown}초 후 재호출 가능` : "직원 호출 완료"}
           </>
         )
+<<<<<<< HEAD
       case "error":
         return (
           <>
@@ -170,6 +209,8 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
             호출 실패
           </>
         )
+=======
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
       default:
         return (
           <>
@@ -187,13 +228,17 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
         return "bg-yellow-400 hover:bg-yellow-400 text-black"
       case "called":
         return "bg-green-500 hover:bg-green-500 text-white"
+<<<<<<< HEAD
       case "error":
         return "bg-red-500 hover:bg-red-500 text-white"
+=======
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
       default:
         return "bg-orange-500 hover:bg-orange-600 text-white"
     }
   }
 
+<<<<<<< HEAD
   const callButton = (
     <Button
       onClick={status === "idle" ? (fixed ? handleQuickCall : () => setIsDialogOpen(true)) : undefined}
@@ -285,10 +330,25 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
         {/* 빠른 호출 버튼 (다이얼로그 없이) */}
         <div className="fixed bottom-24 right-4 z-50">{callButton}</div>
       </>
+=======
+  if (fixed) {
+    return (
+      <div className="fixed bottom-24 right-4 z-50">
+        <Button
+          onClick={handleCallStaff}
+          disabled={status !== "idle"}
+          className={cn("shadow-lg", getButtonStyle(), className)}
+          size="lg"
+        >
+          {getButtonContent()}
+        </Button>
+      </div>
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
     )
   }
 
   return (
+<<<<<<< HEAD
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>{callButton}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
@@ -361,5 +421,10 @@ export function CallStaffButton({ className, fixed = true }: CallStaffButtonProp
         </DialogFooter>
       </DialogContent>
     </Dialog>
+=======
+    <Button onClick={handleCallStaff} disabled={status !== "idle"} className={cn(getButtonStyle(), className)}>
+      {getButtonContent()}
+    </Button>
+>>>>>>> ca61e5b912acbe0896a4830d165271adaf335182
   )
 }
